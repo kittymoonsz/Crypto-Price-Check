@@ -5,16 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>POG</title>
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Certifique-se de carregar o Chart.js -->
 </head>
 <body>
   <header class="header">
+  <div class="header-left">
     <a href="#default" class="logo">CompanyLogo</a>
-    <a>R$9999,99</a>
-    <div class="header-right">
-      <a class="active" href="#home">Home</a>
-      <a href="#contact">Contact</a>
-      <a href="#about">About</a>
-    </header>
+    <a id="balance" class="balance">R$9999,99</a>
   </div>
+  <div class="header-right">
+    <a href="#contact" class="nav-link">Settings</a>
+    <a href="#about" class="nav-link">Account</a>
+  </div>
+</header>
+
+  <div id="chart-container" class="chart-container">
+    <canvas id="myChart" class="chart"></canvas>
+  </div>
+
+  <script src="main.js"></script>
 </body>
 </html>
+
