@@ -13,7 +13,7 @@ Chart.register({
     const radius = chart.outerRadius || chart._metasets[0].data[0].outerRadius; // Raio do gráfico
 
     // Posição de onde a seta começa
-    const arrowX = centerX - radius - 20;
+    const arrowX = centerX - radius - 20; 
     const arrowY = centerY;
 
     // Desenha a seta para a esquerda
@@ -29,14 +29,11 @@ Chart.register({
     // Alinha o texto com a seta
     ctx.font = "bold 24px Arial"; // Define o estilo da fonte
     ctx.fillStyle = "#FFFFFF"; // Cor do texto
-    ctx.textAlign = "right"; // Alinha o texto à direita, de modo que ele expanda para a esquerda
+    ctx.textAlign = "center"; // Alinha o texto no centro
 
-    // Limite do texto à direita, com um pouco de margem para não ficar grudado na seta
-    const textLimitX = arrowX - 50; // Define o limite direito do texto
-    const textX = Math.max(textLimitX, arrowX - 80); // Garante que o texto não ultrapasse o limite
-
-    // Posição vertical do texto
-    const textY = arrowY;
+    // Agora ajustamos a posição do texto para ficar ao lado da seta
+    const textX = arrowX - 80; // Posição do texto mais à esquerda
+    const textY = arrowY;  // Alinha verticalmente com a seta
 
     // Desenha o texto
     ctx.fillText(`${chart.arrowLabel}`, textX, textY); // Desenha o texto

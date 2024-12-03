@@ -3,27 +3,29 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>POG</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Certifique-se de carregar o Chart.js -->
+  <title>Centered Chart</title>
+  <link rel="stylesheet" href="styles.css"> <!-- Link to the external CSS file -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-  <header class="header">
-  <div class="header-left">
-    <a href="#default" class="logo">CompanyLogo</a>
-    <a id="balance" class="balance">R$9999,99</a>
-  </div>
-  <div class="header-right">
-    <a href="#contact" class="nav-link">Settings</a>
-    <a href="#about" class="nav-link">Account</a>
-  </div>
-</header>
-
-  <div id="chart-container" class="chart-container">
-    <canvas id="myChart" class="chart"></canvas>
+  <!-- Header Section -->
+  <div class="header">
+    <div class="header-left">
+      <a href="#" class="logo">Logo</a>
+      <div id="balance">Balance: $100</div>
+    </div>
+    <div class="header-right">
+      <a href="#">Link 1</a>
+      <a href="#">Link 2</a>
+    </div>
   </div>
 
-  <script src="main.js"></script>
+  <!-- Chart Section -->
+  <div class="chart-container">
+    <canvas id="myChart"></canvas>
+  </div>
+
+  <script src="main.js"></script> <!-- Link to the JavaScript file -->
 </body>
 </html>
 
