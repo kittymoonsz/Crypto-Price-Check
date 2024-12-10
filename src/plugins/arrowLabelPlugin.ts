@@ -3,8 +3,8 @@ export const arrowLabelPlugin = {
   id: 'arrowLabelPlugin',
   afterDraw(chart: any) {
     const ctx = chart.ctx;
-    const arrowLabel = (chart as any).arrowLabel; // Get the label for the arrow
-    if (!arrowLabel) return; // Don't draw the arrow if no label is set
+    const arrowLabel = (chart as any).arrowLabel;
+    if (!arrowLabel) return;
 
     const meta = chart.getDatasetMeta(0);
     const index = chart.data.labels.indexOf(arrowLabel);
@@ -19,56 +19,63 @@ export const arrowLabelPlugin = {
     // Calculate arrow positions
     const angle = (startAngle + endAngle) / 2;
     const radius = (innerRadius + outerRadius) / 2;
-    const arrowLength = 70;
-    const startX = chart.width / 2 + Math.cos(angle) * radius;
+    const arrowLength = 70; // Length of the line
+    const segmentEndRadius = outerRadius;
+    const startX = chart.width / 2 + Math.cos(angle) * radius - 30;
     const startY = chart.height / 2 + Math.sin(angle) * radius;
     const endX = chart.width / 2 + Math.cos(angle) * (radius + arrowLength);
     const endY = chart.height / 2 + Math.sin(angle) * (radius + arrowLength);
 
-    // Draw the arrow
+    // Draw the arrow line
     ctx.save();
     ctx.beginPath();
     ctx.moveTo(startX, startY);
     ctx.lineTo(endX, endY);
     ctx.strokeStyle = '#FFFFFF';
-    ctx.lineWidth = 4;
+    ctx.lineWidth = 5;
     ctx.stroke();
 
     // Draw the arrowhead
-    const arrowSize = 30;
+    const arrowSize = 30; // Size of the arrowhead
+    const arrowAngle = Math.PI / 6; // Angle of the arrowhead sides
+
+    const arrowHeadOffset = -25; // Adjust this value to control how much the arrowhead moves inward
+
+    // Adjusted arrowhead starting point (new endX and endY)
+    const arrowHeadX = chart.width / 2 + Math.cos(angle) * (radius + arrowLength - arrowHeadOffset);
+    const arrowHeadY = chart.height / 2 + Math.sin(angle) * (radius + arrowLength - arrowHeadOffset);
+
+    // Draw the arrowhead
     ctx.beginPath();
-    ctx.moveTo(endX, endY);
+    ctx.moveTo(arrowHeadX, arrowHeadY); // Base point of the arrowhead
     ctx.lineTo(
-      endX - arrowSize * Math.cos(angle - Math.PI / 6),
-      endY - arrowSize * Math.sin(angle - Math.PI / 6)
+      arrowHeadX - arrowSize * Math.cos(angle - arrowAngle),
+      arrowHeadY - arrowSize * Math.sin(angle - arrowAngle)
     );
     ctx.lineTo(
-      endX - arrowSize * Math.cos(angle + Math.PI / 6),
-      endY - arrowSize * Math.sin(angle + Math.PI / 6)
+      arrowHeadX - arrowSize * Math.cos(angle + arrowAngle),
+      arrowHeadY - arrowSize * Math.sin(angle + arrowAngle)
     );
     ctx.closePath();
     ctx.fillStyle = '#FFFFFF';
     ctx.fill();
 
-    // Draw the segment label next to the arrow
-    const labelX = endX - 10; // Offset the label a little to the right
-    const labelY = endY;
+    // Position for the segment name after the arrowhead
+    const label = chart.data.labels[index];
+    const labelOffset = 0; // Offset after the arrowhead to avoid overlap
+    const labelDistance = -10; // Distance to move the label further from the arrowhead
 
-    // Set text properties
-    ctx.font = '30px Arial';
-    ctx.fillStyle = '#FFFFFF';
-    ctx.textAlign = 'right'; // Text aligns to the right, so it moves from right to left
-    ctx.textBaseline = 'middle'; // Vertically center the text
+    // Calculate the position for the label after the arrowhead
+    const labelX = arrowHeadX + Math.cos(angle) * (arrowSize + labelDistance);
+    const labelY = arrowHeadY + Math.sin(angle) * (arrowSize + labelDistance);
 
-    // Calculate the final position of the label based on how far it has moved to the left
-    let moveX = labelX;
-    const moveSpeed = 2; // Control the speed at which the text moves
+    // Set up the font style for the label
+    ctx.font = '30px Arial'; // Adjust the font size and style as needed
+    ctx.fillStyle = '#FFFFFF'; // Set the label color
+    ctx.textAlign = 'right';
 
-    // Move the label left over time
-    moveX -= moveSpeed;
-
-    // Draw the label, making sure it starts from the right and moves left
-    ctx.fillText(arrowLabel, moveX, labelY);
+    // Draw the label next to the arrowhead
+    ctx.fillText(label, labelX, labelY);
 
     ctx.restore();
   },
