@@ -5,10 +5,15 @@ import { centerTextPlugin } from './plugins/centerTextPlugin'; // Correct import
 import { arrowLabelPlugin } from './plugins/arrowLabelPlugin'; // Correct import from arrowLabelPlugin.ts
 import Header from './components/Header';
 import Footer from './components/Footer';
+import SearchBar from "./components/SearchBar/SearchBar.tsx";
 import BoxContainer from './components/BoxContainer';
 
 Chart.register(centerTextPlugin, arrowLabelPlugin);
 const App: React.FC = () => {
+    const handleSearch = (query: string) => {
+    console.log("Search query:", query);
+    // Implement API call or filtering logic here
+  };
   const [dadosMoeda, setDadosMoeda] = useState({
     variation: "+2.5%",
     token: "Bitcoin",
@@ -123,17 +128,23 @@ const handleChartClick = (event: MouseEvent) => {
     };
   }, []);
 
-  return (
-    <div>
-      <Header />
-      <div className="chart-container">
-        <canvas id="myChart" />
-        <hr className="separator" />
-        <BoxContainer data={dadosMoeda} />
+return (
+  <div className="app-container">
+    <Header />
+    <div className="dashboard">
+      <div className="search-bar top-left">
+          <SearchBar onSearch={handleSearch}/>
       </div>
-      <Footer />
+      <div className="line-chart top-right"> {/* Line chart */}</div>
+      <div className="coin-chart center">
+        <canvas id="myChart" />
+      </div>
+      <div className="coin-details bottom-left"> {/* Coin details */}</div>
+      <div className="related-coins bottom-right"> {/* Related coins */}</div>
     </div>
-  );
+    <Footer />
+  </div>
+);
 };
 
 export default App;

@@ -188,4 +188,39 @@ html, body {
   border: 2px solid #00e0ff; /* Add a glowing border when selected */
   box-shadow: 0 0 10px #00e0ff; /* Add a glowing effect */
 }
+.dashboard {
+  display: grid;
+  grid-template-areas:
+    'top-left center top-right'
+    'bottom-left center bottom-right';
+  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-rows: 1fr 2fr;
+  gap: 8px;
+  height: calc(100vh - 120px); /* Adjust height minus header and footer */
+  padding: 16px;
+}
+
+.top-left {
+  grid-area: top-left;
+}
+
+.top-right {
+  grid-area: top-right;
+}
+
+.center {
+  grid-area: center;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Aligns the chart to the top of the cell */
+  padding-top: 8px; /* Optional: Fine-tune the spacing from the top */
+}
+
+.bottom-right {
+  grid-area: bottom-right;
+}
+
+.bottom-left {
+  grid-area: bottom-left;
+}
 
